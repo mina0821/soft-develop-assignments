@@ -1,0 +1,503 @@
+\documentclass[12pt]{article}
+
+\usepackage{graphicx}
+\usepackage{paralist}
+\usepackage{amsfonts}
+
+\begin {document}
+
+\section* {Constants Module}
+
+\subsection*{Module}
+
+Constants
+
+\subsection* {Uses}
+
+N/A
+
+\subsection* {Syntax}
+
+\subsubsection* {Exported Constants}
+
+MAX\_X = 180 {\it //dimension in the x-direction of the problem area}\\
+MAX\_Y = 160 {\it //dimension in the y-direction of the problem area}\\ 
+TOLERANCE = 5 {\it //space allowance around obstacles}\\
+VELOCITY\_LINEAR = 15 {\it //speed of the robot when driving straight}\\
+VELOCITY\_ANGULAR = 30 {\it //speed of the robot when turing rad}
+
+\subsubsection* {Exported Access Programs}
+
+none
+
+\subsection* {Semantics}
+
+\subsubsection* {State Variables}
+
+none
+
+\subsubsection* {State Invariant}
+
+none
+
+\newpage
+
+\section* {Point ADT Module}
+
+\subsection*{Template Module}
+
+PointT
+
+\subsection* {Uses}
+
+Constants
+
+\subsection* {Syntax}
+
+\subsubsection* {Exported Types}
+
+PointT = ?
+
+\subsubsection* {Exported Access Programs}
+
+\begin{tabular}{| l | l | l | l |}
+\hline
+\textbf{Routine name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions}\\
+\hline
+PointT & real, real & PointT & InvalidPointException\\
+\hline
+xcrd & ~ & real & ~\\
+\hline
+ycrd & ~ & real & ~\\
+\hline
+dist & PointT & real & ~\\
+\hline
+\end{tabular}
+
+\subsection* {Semantics}
+
+\subsubsection* {State Variables}
+
+$xc$: real\\
+$yc$: real
+
+\subsubsection* {State Invariant}
+
+none
+
+\subsubsection* {Assumptions}
+The constructor PointT is called for each abstract object before any other access routine is called for that
+object.  The constructor cannot be called on an existing object.
+
+\subsubsection* {Access Routine Semantics}
+
+PointT($x, y$):
+\begin{itemize}
+\item transition: $xc, yc := x, y$
+\item output: $out := \mathit{self}$
+\item exception
+ $exc := ((\neg(0 \leq x \leq \mbox{Contants.MAX\_X}) \vee \neg(0 \leq y \leq \mbox{Constants.MAX\_Y})) \Rightarrow
+\mbox{InvalidPointException})$
+\end{itemize}
+
+\noindent xcrd():
+\begin{itemize}
+\item output: $out := xc$
+\item exception: none
+\end{itemize}
+
+\noindent ycrd():
+\begin{itemize}
+\item output: $out := yc$
+\item exception: none
+\end{itemize}
+
+\noindent dist($p$):
+\begin{itemize}
+\item output: $out := \sqrt{(\mathit{self}.xc - p.xc)^2 + (\mathit{self}.yc - p.yc)^2}$
+\item exception: none
+\end{itemize}
+
+\newpage
+
+\section* {Region Module}
+
+\subsection* {Template Module}
+
+RegionT
+
+\subsection* {Uses}
+
+PointT, Constants
+
+\subsection* {Syntax}
+
+\subsubsection* {Exported Types}
+
+RegionT = ?
+
+\subsubsection* {Exported Access Programs}
+
+\begin{tabular}{| l | l | l | l |}
+\hline
+\textbf{Routine name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions}\\
+\hline
+RegionT & PointT, real, real & RegionT & InvalidRegionException\\
+\hline
+pointInRegion & PointT & boolean & ~\\
+\hline 
+\end{tabular}
+
+\subsection* {Semantics}
+
+\subsubsection* {State Variables}
+
+$\mathit{lower\_left}$: PointT {\it //coordinates of the lower left corner of the region}\\
+$\mathit{width}$: real {\it //width of the rectangular region}\\
+$\mathit{height}$: real {\it //height of the rectangular region}
+
+\subsubsection* {State Invariant}
+None
+
+\subsubsection* {Assumptions}
+The RegionT constructor is called for each abstract object before any other access routine is called for that
+object.  The constructor can only be called once.
+
+\subsubsection* {Access Routine Semantics}
+
+\noindent RegionT($p, w, h$):
+\begin{itemize}
+\item transition: $\mathit{lower\_left}, \mathit{width}, \mathit{height} := p, w, h$
+\item output: $out := \mathit{self}$
+\item exception: $exc := \exists ( pt: \mbox{PointT} | \mbox{insideRegion}(pt,self.lower\_left,self.width,self.height) : \neg \mbox{insideRegoin}(pt,\mbox{PointT}(0,0),\mbox{Constants.MAX\_X},\mbox{Constants.MAX\_Y}) \Rightarrow \mbox{InvalidRegionException}$
+\end{itemize}
+
+\noindent pointInRegion($p$):
+\begin{itemize}
+\item output: $\mathit{out} := \exists ( pt: \mbox{PointT} | \mbox{insideRegoin}(pt,self.lower\_left,self.width,self.height) : pt.\mbox{dist}(p) \leq \mbox{Constants.TOLERANCE})$
+\item exception: none
+\end{itemize}
+
+\subsubsection*{Local Functions}
+insideRegion: PointT $\times$ PointT $\times$ real $\times$ real $\rightarrow$ boolean
+
+\noindent insideRegion$(p,preg,w,h) \equiv preg.\mbox{xcrd}() \leq p.\mbox{xcrd}() \leq preg.\mbox{xcrd}()+w \wedge preg.\mbox{ycrd}() \leq p.\mbox{ycrd}() \leq preg.\mbox{ycrd}()+h$
+
+\newpage
+
+\section* {Generic List Module}
+
+\subsection* {Generic Template Module}
+
+GenericList(T)
+
+\subsection* {Uses}
+
+N/A
+
+\subsection* {Syntax}
+
+\subsubsection* {Exported Types}
+GenericList(T) = ?
+
+\subsubsection* {Exported Constants}
+
+MAX\_SIZE = 100
+
+\subsubsection* {Exported Access Programs}
+
+\begin{tabular}{| l | l | l | p{5cm} |}
+\hline
+\textbf{Routine name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions}\\
+\hline
+GenericList & ~ & GenericList & ~\\
+\hline
+add & integer, T & ~ & FullSequenceException,\newline InvalidPositionException\\
+\hline
+del & integer & ~ & InvalidPositionException\\
+\hline
+setval & integer, T & ~ & InvalidPositionException\\
+\hline
+getval & integer & T & InvalidPositionException\\
+\hline
+size & ~ & integer & ~\\
+\hline
+
+\end{tabular}
+
+\subsection* {Semantics}
+
+\subsubsection* {State Variables}
+$s$: sequence of T
+
+\subsubsection* {State Invariant}
+$| s | \leq \mathrm{MAX\_SIZE}$
+
+\subsubsection* {Assumptions}
+The GenericList() constructor is called for each abstract object before any other access routine is called for that
+object.  The constructor can only be called once.
+
+\subsubsection* {Access Routine Semantics}
+
+GenericList():
+\begin{itemize}
+\item transition: $\mathit{self}.s := < >$
+\item output: $\mathit{out} := \mathit{self}$
+\item exception: none
+\end{itemize}
+
+\noindent add($i, p$):
+\begin{itemize}
+\item transition: $s := s[0..i-1] || <p> || s[i..|s|-1]$
+\item exception: $exc := (|s| = \mathrm{MAX\_SIZE} \Rightarrow  \mathrm{FullSequenceException} ~ | ~ i \notin [0..|s|] \Rightarrow
+\mathrm{InvalidPositionException})$
+\end{itemize}
+
+\noindent del($i$):
+\begin{itemize}
+\item transition: $s := s[0..i-1] || s[i+1..|s|-1]$
+\item exception:  $exc := (i \notin [0..|s|-1] \Rightarrow \mathrm{InvalidPositionException})$
+\end{itemize}
+
+\noindent setval($i, p$):
+\begin{itemize}
+\item transition: $s[i] := p$
+\item exception: $exc := (i \notin [0..|s|-1] \Rightarrow \mathrm{InvalidPositionException})$
+\end{itemize}
+
+\noindent getval($i$):
+\begin{itemize}
+\item output: $out := s[i]$
+\item exception: $exc := (i \notin [0..|s|-1] \Rightarrow \mathrm{InvalidPositionException})$
+\end{itemize}
+
+\noindent size():
+\begin{itemize}
+\item output: $out := | s |$
+\item exception: none
+\end{itemize}
+
+\newpage
+
+\section* {Path Module}
+
+\subsection* {Template Module}
+
+PathT is GenericList(PointT)
+
+\section* {Obstacles Module}
+
+\subsection* {Template Module}
+
+Obstacles is GenericList(RegionT)
+
+\section* {Destinations Module}
+
+\subsection* {Template Module}
+
+Destinations is GenericList(RegionT)
+
+\section* {SafeZone Module}
+
+\subsection* {Template Module}
+
+SafeZone extends GenericList(RegionT)
+
+\subsection*{Exported Constants}
+MAX\_SIZE = 1
+
+%\section* {Path List Module}
+
+%\subsection* {Template Module}
+
+%PathListT is GenericList(PathT)
+
+\newpage
+
+\section* {Map Module}
+
+\subsection* {Module}
+
+Map
+
+\subsection* {Uses}
+
+Obstacles, Destinations, SafeZone
+
+\subsection* {Syntax}
+
+\subsubsection* {Exported Access Programs}
+
+\begin{tabular}{| l | l | l | l |}
+\hline
+\textbf{Routine name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions}\\
+\hline
+init & Obstacles, Destinations, SafeZone & ~ & ~\\
+\hline
+get\_obstacles & ~ & Obstacles & ~\\
+\hline
+get\_destinations & ~ & Destinations & ~\\
+\hline
+get\_safeZone & ~ & SafeZone & ~\\
+\hline
+
+\end{tabular}
+
+\subsection* {Semantics}
+
+\subsubsection*{State Variables}
+$\mathit{obstacles}:$ Obstacles\\
+$\mathit{destinations}:$ Destinations\\
+$\mathit{safeZone}:$ SafeZone
+
+\subsubsection* {State Invariant}
+none
+
+\subsubsection* {Assumptions}
+The access routine init() is called for the abstract object before any other access routine is called.  If the map is
+changed, init() can be called again to change the map.
+
+\subsubsection* {Access Routine Semantics}
+
+\noindent init($o, d, sz$):
+\begin{itemize}
+\item transition: $\mathit{obstacles}, \mathit{destinations}, \mathit{safeZone}  := o, d, sz$
+\item exception: none
+\end{itemize}
+
+\noindent get\_obstacles():
+\begin{itemize}
+\item output: $\mathit{out} := \mathit{obstacles}$
+\item exception: none
+\end{itemize}
+
+\noindent get\_destinations():
+\begin{itemize}
+\item output: $\mathit{out} := \mathit{destinations}$
+\item exception: none
+\end{itemize}
+
+\noindent get\_safeZone():
+\begin{itemize}
+\item output: $\mathit{out} := \mathit{safeZone}$
+\item exception: none
+\end{itemize}
+
+\newpage
+
+\section* {Path Calculation Module}
+
+\subsection* {Module}
+
+PathCalculation
+
+\subsection* {Uses}
+
+Constants, PointT, RegionT, PathT, Obstacles, Destinations, SafeZone, Map
+
+\subsection* {Syntax}
+
+\subsubsection* {Exported Access Programs}
+
+\begin{tabular}{| l | l | l | l |}
+\hline
+\textbf{Routine name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions}\\
+\hline
+is\_validSegment & PointT, PointT & boolean & ~\\
+\hline
+is\_validPath & PathT & boolean & ~\\
+\hline
+is\_shortestPath & PathT & boolean & ~\\
+\hline
+totalDistance & PathT & real & ~\\
+\hline
+totalTurns & PathT & integer & ~\\
+\hline
+estimatedTime & PathT & real & ~\\
+\hline
+%sortPathList & PathListT & PathListT & ~\\
+%\hline
+
+\end{tabular}
+
+\subsection* {Semantics}
+
+\noindent is\_validSegment($p, pt$):
+\begin{itemize}
+\item output: 
+\newline $out:= \forall ( i,t : \mathbb{N} | i \in [0 .. \mbox{Map.get\_obstacles.size()}-1] \wedge 0 \leq t \leq 1: \mbox{Map.get\_obstacles.getval(}i\mbox{).pointInRegion(paraLinePt}(p,pt,t))$
+\item exception: none
+\end{itemize}
+
+\noindent is\_validPath($p$):
+\begin{itemize}
+\item output: $out:= \mbox{isSafe}(p) \wedge \mbox{isPass}(p) \wedge \mbox{notObst}(p)$
+\item exception: none
+\end{itemize}
+
+\noindent is\_shortestPath($p$):
+\begin{itemize}
+\item output: $out:= \forall (pa: \mbox{PathT} | \mbox{is\_validPath}(pa) : p.\mbox{size}() \leq pa.\mbox{size}())$
+\item exception: none
+\end{itemize}
+
+\noindent totalDistance($p$):
+\begin{itemize}
+\item output: $out:= +(i, j : \mathbb{N} | i \in [0.. p.\mbox{size}()-2] \wedge j \in [1 .. p.\mbox{size}()-1] : p.\mbox{getval}(i).\mbox{dist}(p.\mbox{getval}(j))$
+\item exception: none
+\end{itemize}
+
+\noindent totalTurns($p$):
+\begin{itemize}
+\item output: $out:= +(i : \mathbb{N} | i \in [0 .. p.\mbox{size}()-3]\wedge \mbox{changeOrien} (p.\mbox{getval}(i),p.\mbox{getval}(i+2) : 1)$
+\item exception: none
+\end{itemize}
+
+\noindent estimatedTime($p$):
+\begin{itemize}
+\item output: $out:= \mbox{totalDistance}(p) * \mbox{Constants.VELOCITY\_LINEAR} + \mbox{totalTurns}(p) * \mbox{Constants.VELOCITY\_ANGULAR}$
+\item exception: none
+\end{itemize}
+
+\subsubsection*{Local Functions}
+paraLinePt: PointT $\times$ PointT $\times$ real $\rightarrow$ PointT
+
+\noindent paraLinePt$(p,pt,t) \equiv \mbox{PointT} ((1-t) * p.\mbox{xcrd}() + t * pt.\mbox{xcrd}(), (1-t) * p.\mbox{ycrd}() + t * pt.\mbox{ycrd}())$ ~\newline
+
+\noindent isSafe: PathT $\rightarrow$ boolean
+
+\noindent isSafe$(p) \equiv$ Map.get\_safeZone().getval(0).pointInRegion($p$.getval(0)) $\wedge$ ~\newline Map.get\_safeZone().getval(0).pointInRegion($p$.getval($p$.size()-1)) ~\newline
+
+\noindent isPass: PathT $\rightarrow$ boolean
+
+\noindent isPass$(p) \equiv \forall (i : \mathbb{N} | i \in [0 .. \mbox{Map.get\_destinations().size()}-1] : ~\newline \exists (j : \mathbb{N} | j \in [ 0 .. p.\mbox{size}()-1] : \mbox{Map.get\_destinations().getval}(i).\mbox{pointInRegion}(p.\mbox{getval}(j))))$ ~\newline
+
+\noindent notObst: PathT $\rightarrow$ boolean
+
+\noindent notObst$(p) \equiv \forall (i,j : \mathbb{N} | i \in [0 .. \mbox{Map.get\_obstacles().size()}-1] \wedge ~\newline j \in [0 .. p.\mbox{size}()-1] : \neg$ Map.get\_obstacles().getval($i$).pointInRegion($p$.getval($j$))) ~\newline
+
+\noindent changeOrien: PointT $\times$ PointT $\rightarrow$ boolean
+
+\noindent changeOrien$(p,pt) \equiv p.\mbox{xcrd}() \neq pt.\mbox{xcrd}() \wedge p.\mbox{ycrd}() \neq pt.\mbox{ycrd}()$
+
+\section*{Crtique of the interface}
+\subsection*{PathT specification}
+Interface could use a better representation of the path instead of using a genericlist of points. To avoid ambiguous, the interface could use line segment to define path instead of points. There are two problems when we use a set of points to define a path: 1) the way we connect each points could varies. 2) the order of the point could be considered as an important factor when we are trying to connect a set of points, but this is not stated explicitly in the module.
+
+\subsection*{SafeZone extends GenericList}
+Another wired thing I found with this modules is SafeZone module. SafeZone module inheritence from GenericList<RegionT> and then define MAX\_SIZE to be 1. After I finished the pathCalculation module semantics, I found that the module will be more understandable if we just simply create an instant object using ADT RegionT, and then call the object SafeZone. There is no need to create one more list with only one element.
+
+\subsection*{Path calculation module based on Map}
+Path Calculation module could be considered as useless if we dont have a valid map obejcts defined. Without a map obejct as backup, this module could not run at all. I think this situation should be stated in the module, by exception or assumptions.
+
+\subsection*{For i $\in$ $[0 .. |p|-1]$ compare $p[i]$ and $p[i+2]$}
+Suppose the order of the points in the path set is the order of connecting thoese points, $p[i]$ to $p[i+2]$ connects three points in a line, which is the least amount to tell that there is a change of orientation. So inside the specification, I compare these two elements and iterate through the end of the list. The comparison method in my specification is just simply compare if these two coordiates have the at least one same x or y coordinates. If they do not have any common x or y coordinats, indicates there is a change of orientation. On the other hand, my specification is based on the fact that each orientation only rotate 90 degrees.
+
+\subsection*{If orientations could rotate any degrees between 0 and 360}
+In this case, we must come up with an equations. Suppose x,x2 is the point we need to compare. But in this case, the rotation is not 90 degrees. In order to find the degree of rotation, we need to find cos($\Theta$) which is adjacent over hypotenuse lines. Adjacent line is indicated by point x's x-coordinates. Hypotenuse line could be represented by the distance from origin to x2. In math equation, we could write:
+\begin{displaymath}
+\cos(\Theta) = \frac{x.xcrd()}{x2.dist(PointT(0,0))}
+\end{displaymath}
+
+\end {document}
+\grid

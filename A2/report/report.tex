@@ -1,0 +1,326 @@
+% set up document type -- article
+\documentclass[12pt]{article}
+
+% import packages
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{amsfonts}
+
+% set up the content page feature
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+}
+
+% set up the listings package feature
+\lstset{
+  frame=single,
+  breaklines=true
+}
+
+
+\begin{document}
+
+% create a title page
+\title{CS2ME3 Assignment 1 report}
+\author{Mingnan Su \\ macID: sum1}
+\maketitle
+
+% set up the hyperlink for {Return to content page}
+\addtocontents{toc}{\protect\hypertarget{toc}{}}
+% create a content page
+\tableofcontents
+
+\newpage
+% 1 present my codes
+\section{My Codes}
+
+  % 1.1 pointADT.py
+  \subsection{pointADT.py}
+  \lstinputlisting{../src/pointADT.py}
+
+  % 1.2 lineADT.py
+  \subsection{lineADT.py}
+  \lstinputlisting{../src/lineADT.py}
+
+  % 1.3 circleADT.py
+  \subsection{circleADT.py}
+  \lstinputlisting{../src/circleADT.py}
+
+  % 1.4 deque.py
+  \subsection{deque.py}
+  \lstinputlisting{../src/deque.py}
+
+  % 1.5 testCircleDeque.py
+  \subsection{testCircleDeque.py}
+  \lstinputlisting{../src/testCircleDeque.py}
+
+  % 1.6 Makefile
+  \subsection{Makefile}
+  \lstinputlisting{../Makefile}
+
+
+% leave some white space
+\vskip 3cm
+% put the link to content page at the front
+\hyperlink{toc}{Return to content page.}
+
+% 2 present my partner's circleADT.py codes
+\section{Partner Codes}
+
+  % 2.1 CircleADT.py
+  \subsection{CircleADT.py}
+  \lstinputlisting{../srcPartner/circleADT.py}
+
+
+% leave some white space
+\vskip 5cm
+% put the link to content page at the front
+\hyperlink{toc}{Return to content page.}
+
+% 3 the result of testing my files
+\section{The result of testing my files}
+
+  % 3.1 test result given
+  \subsection {Compilation result}
+  \begin{lstlisting}[frame=single]
+  ....................................................
+  ----------------------------------------------------
+  Ran 52 tests in 0.002s
+
+  OK
+  \end{lstlisting}
+
+  % 3.2 rational for test case selection
+  \subsection {rational for test cases}
+  For every method in an ADT, and for every access program
+  in deque.py, I create a normal case for each procedure.
+
+  
+  Then, I check for exceptions for every procedure which have
+  exceptions stated in the specification.
+
+
+  Also, I check for the boundary cases.
+  \begin{itemize}
+    \item For pointADT, I check for the distance between two 
+  overlapped points, and check for rotation of a point with 
+  0, 360, negative degrees.
+    \item For lineADT, I check for the length and the middle 
+  point of the line with two overlapped points. I also check 
+  for the rotation of the line with 0, 360, negative degrees.
+    \item For circleADT, I check for the intersection between
+  two nested circle and two boundary touched circle.
+    \item For deque, I check if the size is zero after we 
+  initialize a deque. And I check for the result of disjoint
+  method with only one circlei in the deque.
+  \end{itemize}
+
+
+% leave some white space
+\vskip 5cm
+% put the link to content page at the front
+\hyperlink{toc}{Return to content page.}
+
+% 4 The results of testing my files along with my partner's
+\section{The result of testing partner's files}
+
+  % 4.1 test result given
+  \subsection {Compilation result}
+  \begin{lstlisting}[frame=single]
+  ....................................................
+  ----------------------------------------------------
+  Ran 52 tests in 0.002s
+
+  OK
+  \end{lstlisting}
+
+  % 4.2 the number of passed and failed test cases
+  \subsection {the number of passed and failed test cases}
+  There is 52 test cases in total, all passed.
+
+  % 4.3 failed test cases
+  \subsection {details of failed test cases}
+  All the test cases are passed, including the boundary cases
+  I stated above. 
+
+  % 4.4 summary of overal results
+  \subsection {Summary}
+  All test passed. As shown in my partner's code conmment, 
+  he/she already considered the boundary cases I stated in
+  the test file. The implementation of the programs also 
+  does not make any big differences between us. Hence all
+  the test cases are passed.
+
+
+% leave some white space
+\vskip 5cm
+% put the link to content page at the front
+\hyperlink{toc}{Return to content page.}
+
+% 5 Discussion of test results and what I learned
+\section{Discussion of test results}
+
+  % 5.1 What I leanred by doing this assignment
+  \subsection {What I learned}
+  This assignment gives us an opportunity to experience 
+  the real world programming implementation. According
+  to the mathematical specification, we can learn how to
+  translate the math expression into programming language.
+  By going through the process of sepecification
+  implementation, we get a better understanding of the
+  advantages of module interface specification.
+
+  % 5.2 List any problem I found
+  \subsection {Any problem I found with: }
+  \begin{enumerate}
+    % my program
+    \item My program
+    \newline In my program, I found a problem that my
+    implementation of the specification is not as clear
+    as possible. Some part of my code may be confusing
+    to the reader who reads my code. Also, when I was
+    planning and writing my code, I didn't take the 
+    performance into my consideration. Thus, the true
+    implementation may result in bad performance.
+
+    % partner's module
+    \item Partner's module
+    \newline In my partner's module, all the test cases
+    pass through my test file. The true implementation
+    do not have much difference between he/her and me.
+    So the problem I found with my partner's module 
+    might be similar to me (as stated above). The only
+    problem that he/her have but I do not have is about
+    state varibles. I make the state variable in my ADT
+    private to prevent unexpected outernal changes in 
+    ADT objects state variable.
+
+    % the specification of the modules
+    \item the specification of the modules
+    \newline The specification of the modules might can 
+    be improved by omitting unnecessary methods. Also, 
+    every specification of the module in this assignment 
+    depends on one or more other modules, which means as 
+    long as one module is detected with error, abstracted 
+    object deque will crash.
+  \end{enumerate}
+
+  % 5.3 formal MIS in a2 vs. informal specifiation in a1
+  \subsection {formal MIS compare to informal sepecification}
+  Formal module interface specification have better format
+  so that the reader could easily understand what the program
+  is going to achieve compared to informal specification. In
+  assignment 1, we are given informal specification which
+  present the requirement of the module in plain words. Without
+  formal mathematical expression, some idea may end up being
+  ambiguous or igored. On the other hand, the formal module
+  interface specification in assignment 2 helps avoiding 
+  ambiguities and have a clear table to inform what programmer
+  should implement.
+
+  % 5.4 advantages using a testing framework
+  \subsection {testing  framework (pyUnit) advantages}
+  Testing framewrok, in this example pyUnit, helps programmer
+  write a better test program. Some feature, such as setUp
+  method, avoid code duplicate in a test program and speed 
+  up the programmer to write code. 
+
+
+% leave some white space
+\vskip 5cm
+% put the link to content page at the front
+\hyperlink{toc}{Return to content page.}
+
+% 6 Specification for last two access programs as LaTeX equations
+\section{Specification for totalArea(), averageRadius()}
+
+  % 6.1 totalArea() specification
+  \subsection{totalArea()}
+  \begin{displaymath}
+  out:= +(i:\mathbb{N}|i\in[0..|s|-1]:s[i].\textrm{area}())
+  \end{displaymath}
+
+  % 6.2 averageRadius() specification
+  \subsection{averageRadius()}
+  \begin{displaymath}
+  out:= \frac{+(i:\mathbb{N}|i\in[0..|s|-1]:s[i].\textrm{rad}())}
+             {|s|}
+  \end{displaymath}
+
+
+% leave some white space
+\vskip 5cm
+% put the link to content page at the front
+\hyperlink{toc}{Return to content page.}
+
+% 7 Provide a critique of the Circle Module's interface
+\section{Critique of Circle Module's interface}
+
+  % comment specificaly
+  Determine if the exported access program provide is:
+  \begin{itemize}
+    \item consistent
+    \newline This module is consistent. The naming convetion
+    (circle ADT represents a circle) matches common people's
+    perspectives. A circle is located by a point and radius,
+    which is also easy to understand.
+    \item essential
+    \newline A method called intersect in circleADT, could be
+    solved by using another method connection. The programmer
+    can evaluate the length of the connection, and then compare
+    to the sum of two circle's radius, the comparison result
+    could indicates if these two circles intersect. Hence, 
+    circleADT is not essential in some senses. However, intersect
+    method do a lot of great job by simplifying the code, since
+    we are going to implement deque.disjoint() after. 
+    \item general
+    \newline Circle module's interface could be considered as
+    general since it is very easy to understand and mathces
+    common senses. But intersect method ignore the boundary cases
+    (when a small circle is inside the big circle, this module
+    considered these two circle intersect), which might be hard
+    for people to understand.
+    \item minimal
+    \newline Circle module have two methods (rad and area) which
+    both do not take any input and output a real number. This 
+    situation might opposes the idea of minimal. But other than
+    that, this module do a great job on minimize the program.
+    \item opaque
+    \newline In circle module's interface, it uses pointADT and
+    lineADT. This specification hides the details of these two
+    modules and implement them directly. For example, when we 
+    want to create a new circle, we only need to give a real
+    number (radius) and a PointT (a point). What the PointT should
+    look like is not stated in the module. Hence, circle module 
+    could be considered as opaque since it hides the information
+    of the module it used.
+  \end{itemize}
+
+
+% leave some white space
+\vskip 10cm
+% put the link to content page at the front
+\hyperlink{toc}{Return to content page.}
+
+% 8 Discussion of output of Deq_disjoint() when only one circle
+\section{Output of Deq.disjoint() discussion}
+
+  % 8.1 What is the output of specification?
+  \subsection{Output generated by specification (with explanation)}
+  According to specification, the output should be false, cause we
+  only have one circle in the deque, which means the condition will
+  never meet.
+
+  % 8.2 Does this answer make sense? 
+  \subsection{Is output above make sense?}
+  This answer does not make sense, since if there is only one circle
+  in the deque, the only circle does not have any chance intersect
+  with another circle. The output should be true.
+
+  % 8.3 Is it the same result of my code?
+  \subsection{Is output above the same as the result calculated by my code?}
+  No. The result generated by the program is true.
+
+\end{document}
+\grid

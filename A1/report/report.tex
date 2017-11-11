@@ -1,0 +1,116 @@
+\documentclass[12pt]{article}
+
+\usepackage{fullpage}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{upgreek}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+}
+
+
+\begin{document}
+
+\title{CS2ME3 Assignment 1 report}
+\author{Mingnan Su \\ macID: sum1}
+\maketitle
+\addtocontents{toc}{\protect\hypertarget{toc}{}}
+\tableofcontents
+\newpage
+
+% 1.your files
+\section{My Codes}
+
+\subsection{CircleADT.py}
+\lstinputlisting{../src/CircleADT.py}
+\newpage
+
+\subsection{Statistics.py}
+\lstinputlisting{../src/Statistics.py}
+\newpage
+
+\subsection{testCircles.py}
+\lstinputlisting{../src/testCircles.py}
+\vskip 10cm
+
+\subsection{Makefile}
+\lstinputlisting{../Makefile}
+\newpage
+
+% 2.partner's files
+\hyperlink{toc}{Return to content page.}
+\section{Partner Codes}
+
+\subsection{CircleADT.py}
+\lstinputlisting{../src/ptnCircleADT.py}
+\vskip 5cm
+
+\subsection{Statistics.py}
+\lstinputlisting{../src/ptnStatistics.py}
+\newpage
+
+% 3.result testing your files
+\hyperlink{toc}{Return to content page.}
+\section{The result of testing my files}
+\lstinputlisting{myOutput.txt}
+\newpage
+
+% 4.result testing partner&your files
+\hyperlink{toc}{Return to content page.}
+\section{The result of testing partner's files}
+\lstinputlisting{ptnOutput.txt}
+\newpage
+
+% 5.discussion
+\hyperlink{toc}{Return to content page.}
+\section{Discussion of test results}
+Test file works everying OK on my files, partially OK on my partner's file.
+\newline Functions that not worked out right on my partner's files are:
+\begin{enumerate}
+  \item CircleADT.CircleT.insideBox
+  \item Statistics.rank
+\end{enumerate}
+
+\subsection{What you learned doing the exercise}
+I learned many usefull tools by completing this assingment: latex, doxygen, git, etc.
+\subsection{List any problem I found with: }
+\begin{itemize}
+  \item My program
+  \newline I didn't use the comment style which could be detected by doxygen.
+  \item My partner's module
+  \begin{enumerate}
+    \item CircleADT.CircleT.insideBox
+    \newline In my partner's module, in CircleT class, under the function insideBox, he defines:
+    \begin{lstlisting}
+    if (self.x>x0 and self.y>y0)
+    \end{lstlisting}
+    Problem occurs at the second part. The y-coordinate of the center of the circle should always place under y0. In another words, self.y is less than y0
+    \item Statistics.rank
+    \newline In my partner's module, he implement bubble sort to solve the problem. But inside the loops, he writes:
+    \begin{lstlisting}
+    for x in range (len(R)):
+      for i in range (len(R)):
+        if (R[x] > R[i] and Rank[x] > Rank[i])
+    \end{lstlisting}
+    He should only compare the elements in R, and swap the elements in Rank, instead of compare two lists.
+  \end{enumerate}
+  \item the specification of the modules
+  \newline We might can create another ADT called RectT, which defines a rectangular. Then function insideBox becomes
+  \begin{lstlisting}
+  def insideBox (rectT)
+  \end{lstlisting}
+\end{itemize}
+\newpage
+
+% 6.discussion
+\hyperlink{toc}{Return to content page.}
+\section{how I handled the value of $\pi$ in my program}
+I import a python package math and use math.pi to generate a $\pi$ value.
+\subsection{Why I made this choice}
+In this way, I think it's more accurate than I manually type in the value (3.14159)
+\subsection{Is $\pi$ explicitly expanded in my formula}
+When I use a pi value, I just simply replace it with "math.pi". 
+\end{document}

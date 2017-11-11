@@ -1,0 +1,26 @@
+Testing CircleADT ...
+The area of circle 1 should be around 28.27, 
+    the output is 28.2743338823
+The circumference of circle 2 should be around 6.28, 
+    the output is 6.28318530718
+We have a box, circle 2 should inside the box.
+    the output is False
+We have a box, circle 1 should outside the box.
+    the output is False
+circle 1 does not intersect circle 2.
+    the output is False
+circle 1  intersect circle 3.
+    the output is True
+Scale the radius of circle 1 by k=2.Now radius is 6.
+    the output is 6
+Translate the center of circle 1 by (-1,-1).Now center should be (0,3)
+    the output is 0,3
+
+Testing Statistics ...
+The average of circles should be 2.5
+    the output is 2.5
+The standard deviation shoould be around 1.118
+    the output is 1.11803398875
+The ranked list should be [3,1,2,4]
+    the output is [2, 4, 3, 1]
+
